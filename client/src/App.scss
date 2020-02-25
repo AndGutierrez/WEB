@@ -1,0 +1,9 @@
+@import "./scss/index.scss";
+
+.app{
+    h1{
+        color: $primary-color;
+        span {font-weight: 100;}
+    }
+    h2{color: blue;}    
+}
