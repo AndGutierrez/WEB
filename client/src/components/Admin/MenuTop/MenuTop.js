@@ -6,7 +6,7 @@ import "./MenuTop.scss";
 
 export default function MenuTop() {
     return (
-        <div className="menu_top">
+        <div className="menu-top">
             <div className="menu-top__left">
                 <img className="menu-top__left-logo" 
                     src={AdminLogo}
