@@ -3,6 +3,7 @@ import AdminLogo from "../../../assets/img/png/adminlogo.png";
 import { Button, Icon } from "antd";
 
 import "./MenuTop.scss";
+import { Link } from "react-router-dom";
 
 export default function MenuTop(props) {
     const { menuCollapsed, setMenuCollapsed} = props;
@@ -10,10 +11,11 @@ export default function MenuTop(props) {
     return (
         <div className="menu-top">
             <div className="menu-top__left">
-                <img className="menu-top__left-logo" 
-                    src={AdminLogo}
-                    alt="Andrés Gutiérrez"
-                />
+                <Link to={"/admin"}>
+                    <img className="menu-top__left-logo" 
+                        src={AdminLogo}
+                        alt="Andrés Gutiérrez"/>
+                </Link>
                 <Button type="link" onClick={() => setMenuCollapsed(!menuCollapsed)}>
                     <Icon type={menuCollapsed ? "menu-unfold" : "menu-fold"} />
                 </Button>
