@@ -5,6 +5,8 @@ import {
     minLengthValidation
 } from '../../../utils/formValidation';
 
+import { signUpApi } from '../../../api/user';
+
 import './RegisterForm.scss';
 
 export default function RegisterForm () {
@@ -20,7 +22,7 @@ export default function RegisterForm () {
         password: false,
         repeatPassword: false,
         privacyPolicy: false
-    })
+    });
 
     const changeForm = e => {
         console.log(e.target.name);
@@ -36,7 +38,7 @@ export default function RegisterForm () {
                 [e.target.name]: e.target.value
             });
         }
-    }
+    };
 
     const inputValidation = e => {
         const { type, name } = e.target;
@@ -50,9 +52,9 @@ export default function RegisterForm () {
         if (type === "checkbox") {
             setFormValid({ ...formValid, [name]: e.target.checked });
         }
-    }
+    };
 
-    const register = e => {
+    const register = async e => {
         e.preventDefault();
         const { email, password, repeatPassword, privacyPolicy} = formValid;
         const emailVal = inputs.email;
@@ -63,17 +65,27 @@ export default function RegisterForm () {
         if (!emailVal || !passwordVal || !repeatPasswordVal || !privacyPolicyVal) {
             notification["error"]({
                 message: "Todos los campos son obligatorios"
-            })
+            });
         } else {
             if (passwordVal !== repeatPasswordVal) {
                 notification["error"]({
                     message: "Las contraseñas tienen que ser iguales."
                 });
-        } else {
-            // TO DO: Conectar con el API y registrar el usuario.
+            } else {
+                const result = await signUpApi(inputs);
+                if (!result.ok) {
+                    notification["error"]({
+                        message: result.message
+                    });            
+                } else 
+                {
+                    notification["success"]({
+                        message: result.message
+                    });
+                }
+            }
         }
-    }
-    }
+    };
 
     return (
         <Form className="register-form" onSubmit={register} onChange={changeForm}>
@@ -122,5 +134,5 @@ export default function RegisterForm () {
                 </Button>
             </Form.Item>
         </Form>
-    )
+    );
 }
