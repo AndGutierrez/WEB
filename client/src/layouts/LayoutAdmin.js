@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
+import useAuth from "../hooks/useAuth";
 import MenuTop from "../components/Admin/MenuTop";
 import MenuSider from "../components/Admin/MenuSider";
 import AdminSignIn from "../pages/Admin/SignIn/SignIn";
+
+// import { getAccessTokenApi, getRefreshTokenApi, refreshAccessTokenApi } from "../api/auth";
+
 import "./LayoutAdmin.scss";
 
-export default function LayoutAdmin(props){
+export default function LayoutAdmin(props) {
     const { routes } = props;
     const [ menuCollapsed, setMenuCollapsed ] = useState(false);
     const { Header, Content, Footer } = Layout;
+    const { user, isLoading } = useAuth();
     
-    const user = null;
+    console.log(user);    
+
+    // const accessToken = getAccessTokenApi();
+    // const refreshToken = getRefreshTokenApi();
+
     if (!user){
         return ( 
             <>           

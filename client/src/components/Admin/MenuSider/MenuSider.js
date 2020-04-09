@@ -6,7 +6,6 @@ import './MenuSider.scss';
 import Sider from "antd/lib/layout/Sider";
 
 export default function MenuSider(props){
-    console.log(props);
     const { menuCollapsed } = props;
     const {Sider} = Layout;
 

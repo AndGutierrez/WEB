@@ -6,8 +6,6 @@ import "./LayoutBasic.scss";
 
 export default function LayoutBasic({ routes }){
     const { Content, Footer } = Layout;
-    console.log(routes);
-
     return (    
         <Layout>
             <h2>Menu...</h2>
