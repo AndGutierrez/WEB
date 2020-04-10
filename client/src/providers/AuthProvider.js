@@ -35,8 +35,8 @@ function checkUserLogin(setUser) {
         }
     } else {
         setUser({
-            user: jwtDecode(accessToken),
-            isLoading: false
+            isLoading: false,
+            user: jwtDecode(accessToken)
         });
     }
 }

@@ -15,8 +15,9 @@ export default function LayoutAdmin(props) {
     const { user, isLoading } = useAuth();
 
     console.log(user);
+    console.log("IsLoading: " + isLoading);
 
-    if (!user){
+    if (!user && !isLoading) {
         return ( 
             <>           
                 <Route path="/admin/login" component={AdminSignIn} />
@@ -25,25 +26,30 @@ export default function LayoutAdmin(props) {
         );
     }
 
-    return (
-        <Layout>
-            <MenuSider menuCollapsed={menuCollapsed}/>
-            <Layout 
-                className="layoyt-admin" 
-                style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}>
-                <Header className="layout-admin__header">
-                    <MenuTop 
-                        menuCollapsed={menuCollapsed}
-                        setMenuCollapsed={setMenuCollapsed}
-                    />
-                </Header>
-                <Content className="layout-admin__content">
-					<LoadRoutes routes={routes}/>
-				</Content>
-                <Footer className="layout-admin__footer">Andrés Gutiérrez</Footer>
+    if (user && !isLoading) {
+        return (
+            <Layout>
+                <MenuSider menuCollapsed={menuCollapsed}/>
+                <Layout 
+                    className="layoyt-admin" 
+                    style={{ marginLeft: menuCollapsed ? "80px" : "200px" }}>
+                    <Header className="layout-admin__header">
+                        <MenuTop 
+                            menuCollapsed={menuCollapsed}
+                            setMenuCollapsed={setMenuCollapsed}
+                        />
+                    </Header>
+                    <Content className="layout-admin__content">
+                        <LoadRoutes routes={routes}/>
+                    </Content>
+                    <Footer className="layout-admin__footer">
+                        Andrés Gutiérrez
+                    </Footer>
+                </Layout>
             </Layout>
-        </Layout>
-    );
+        );
+    }
+    return null;
 }
 
 function LoadRoutes({ routes } ){

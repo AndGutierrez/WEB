@@ -90,7 +90,8 @@ export default function RegisterForm () {
     };
 
     const resetForm = () => {
-        const input = document.getElementsByTagName('input');
+        const inputs = document.getElementsByTagName('input');
+
         for(let i =0; i < inputs.length; i++) 
         {
             inputs[i].classList.remove("success");
@@ -110,7 +111,7 @@ export default function RegisterForm () {
             repeatPassword: false,
             privacyPolicy: false
         });
-    }
+    };
 
     return (
         <Form className="register-form" onSubmit={register} onChange={changeForm}>

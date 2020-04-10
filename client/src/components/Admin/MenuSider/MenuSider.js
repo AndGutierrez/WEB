@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 
 import './MenuSider.scss';
-import Sider from "antd/lib/layout/Sider";
 
 export default function MenuSider(props){
     const { menuCollapsed } = props;
-    const {Sider} = Layout;
+    const { Sider } = Layout;
 
     return (
         <Sider className="admin-sider" collapsed={menuCollapsed}>
@@ -15,7 +14,7 @@ export default function MenuSider(props){
                 <Menu.Item key="1">
                     <Link to={"/admin"}>
                         <Icon type="home"/>
-                        <span className="nav-test">Home</span>
+                        <span className="nav-text">Home</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="2">
