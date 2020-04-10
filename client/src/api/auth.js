@@ -8,7 +8,6 @@ export function getAccessTokenApi() {
     if (!accessToken || accessToken === "null") {
         return null;
     }
-
     return willExpireToken(accessToken) ? null : accessToken;
 }
 
@@ -18,7 +17,6 @@ export function getRefreshTokenApi() {
     if (!refreshToken || refreshToken === "null") {
         return null;
     }
-
     return willExpireToken(refreshToken) ? null : refreshToken;
 }
 
@@ -26,7 +24,7 @@ export function refreshAccessTokenApi(refreshToken) {
     const url = `${basePath}/${apiVersion}/refresh-access-token`;
     const bodyObj = {
         refreshToken: refreshToken
-    }
+    };
 
     const params = {
         method: "POST",
@@ -37,21 +35,20 @@ export function refreshAccessTokenApi(refreshToken) {
     };
 
     fetch(url, params)
-    .then(response => {
-        if(response.status !== 200) {
-            return null;
-        }
-        return response.json();
+        .then(response => {
+            if (response.status !== 200) {
+                return null;
+            }
+            return response.json();
     })
-    .then(result => {
-        if(!result) {
-            logout();
-        } else {
-            const { refreshToken } = result;
-            localStorage.setItem(ACCESS_TOKEN, result.accessToken);
-            localStorage.setItem(REFRESH_TOKEN, refreshToken);
-        }
-    })
+        .then(result => {
+            if (!result) {
+                logout();
+            } else {
+                localStorage.setItem(ACCESS_TOKEN, result.accessToken);
+                localStorage.setItem(REFRESH_TOKEN, result.refreshToken);
+            }
+    });
 }
 
 export function logout() {
