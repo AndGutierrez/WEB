@@ -18,9 +18,9 @@ export default function MenuSider(props){
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="2">
-                    <Link to={"/admin/menu-web"}>
-                        <Icon type="menu"/>
-                        <span className="nav-text">Menu Web</span>
+                    <Link to={"/admin/users"}>
+                        <Icon type="user"/>
+                        <span className="nav-text">Usuarios</span>
                     </Link>
                 </Menu.Item>
             </Menu>
