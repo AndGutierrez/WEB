@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal as ModalControl } from 'antd';
 
 export default function Modal(props) {
-    const { children, title, isVisible, setIsVisible } = props;
+    const { children, title, isVisible, setIsVisible, user } = props;
 
     return (
-
         <ModalControl
             title={title}
-            centeredv
+            centered
             visible={isVisible}
             onCancel={() => setIsVisible(false)}
             footer={false}
         >
-            {children}
+            {children}        
         </ModalControl>
     );
 }
