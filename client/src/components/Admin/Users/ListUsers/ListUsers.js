@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Switch, List, Avatar, Button, Icon } from 'antd';
 import NoAvatar from '../../../assets/img/png/083 no-avatar.png';
+import Modal from '../../../Modal';
 
 import './ListUsers.scss';
 
@@ -22,6 +23,14 @@ export default function ListUsers(props) {
 
             {viewUsersActives ? <UsersActive usersActive={usersActive}/> 
                 : <UsersInactive usersInactive={usersInactive}/>}
+
+            <Modal
+                title="Form modal"
+                isVisible={true}
+                setIsVisible={() => console.log('En modal')}
+            >
+                Hola este es mi primer Modal!
+            </Modal>
         </div>
     );
 }
