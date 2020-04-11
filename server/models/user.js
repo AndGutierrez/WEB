@@ -9,6 +9,7 @@ const UserSchema = Schema({
     },
     password: String,
     role: String,
+    avatar: String,
     active: Boolean,
 });
 
