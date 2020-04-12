@@ -102,7 +102,7 @@ function getUsersActive(req, res) {
     });
 }
 
-function upLoadAvatar(req, res) {
+function uploadAvatar(req, res) {
     const params = req.params;
     
     User.findById({ _id: params.id }, (err, userData) => {
@@ -157,11 +157,29 @@ function getAvatar(req, res) {
     });
 }
 
+function updateUser(req, res) {
+    const userData = req.body;
+    const params = req.params;
+
+    User.findByIdAndUpdate( { _id: params.id }, userData, (err, userUpdate) => {
+        if (err) {
+            res.status(500).send({ message: "Error del servidor." });
+        } else {
+            if (!userUpdate) {
+                res.status(404).send({ message: "No se ha encontrado ningún usuario." });
+            }
+            res.status(200).send({ message: "Usuario actualizado correctamente." });
+        }
+    })
+    console.log(userData);
+}
+
 module.exports = {
     signUp,
     signIn,
     getUsers,
     getUsersActive,
-    upLoadAvatar,
+    uploadAvatar,
     getAvatar,
+    updateUser,
 };
