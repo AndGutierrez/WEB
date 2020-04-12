@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("../services/jwt");
 const User = require("../models/user");
+const fs = require("fs");
+const path = require("path");
 
 function signUp(req, res) {
     const user = new User();
@@ -100,9 +102,52 @@ function getUsersActive(req, res) {
     });
 }
 
+function upLoadAvatar(req, res) {
+    const params = req.params;
+    
+    User.findById({ _id: params.id }, (err, userData) => {
+        if (err) {
+            return res.status(500).send({ message: "Error del servidor." });
+        } else {
+            if (!userData) {
+                return res.status(404).send({ message: "No se ha localizado el usuario." });
+            }
+        }
+        
+        let user = userData;
+
+        if (req.files) {
+            let filePath = req.files.avatar.path;
+
+            console.log("Ruta imagen:"+ filePath);
+
+            let fileSplit = filePath.split("\\");
+            let fileName = fileSplit[fileSplit.length - 1];
+            let extensionSplit = fileName.split(".");
+            let fileExt = extensionSplit[1]
+
+            if (fileExt !== "png" && fileExt !== "jpg") {
+                return res.status(400).send({ message: "Formato de imagen no es válida. Extensiones permitidas: jpg y png." });
+            }
+            user.avatar = fileName;
+            User.findByIdAndUpdate( { _id: params.id}, user, (err, userResult) => {
+                if (err) {
+                    return res.status(500).send({ message: "Error del servidor." });
+                } else {
+                    if (!userResult) {
+                        return res.status(404).send({ message: "No se ha localizado el usuario." });
+                    }
+                }
+                res.status(200).send({ avatarName: fileName });
+            });
+        }
+    });
+}
+
 module.exports = {
     signUp,
     signIn,
     getUsers,
     getUsersActive,
+    upLoadAvatar,
 };
