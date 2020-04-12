@@ -144,10 +144,24 @@ function upLoadAvatar(req, res) {
     });
 }
 
+function getAvatar(req, res) {
+    const avatarName = req.params.avatarName;
+    const filePath = "./uploads/avatar/" + avatarName;
+
+    fs.exists(filePath, exists => {
+        if (!exists) {
+            res.status(404).send({ message: "El avatar no existe." });
+        } else {
+            res.sendFile(path.resolve(filePath));
+        }
+    });
+}
+
 module.exports = {
     signUp,
     signIn,
     getUsers,
     getUsersActive,
     upLoadAvatar,
+    getAvatar,
 };
