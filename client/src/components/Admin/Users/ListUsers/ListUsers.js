@@ -8,7 +8,7 @@ import { getAvatarApi } from '../../../../api/user';
 import './ListUsers.scss';
 
 export default function ListUsers(props) {
-    const { usersActive, usersInactive} = props;
+    const { usersActive, usersInactive, setReloadUsers } = props;
     const [ viewUsersActives, setViewUsersActives ] = useState(true);
     const [ modalTitle, setModalTitle ] = useState("");
     const [ isVisibleModal, setIsVisibleModal ] = useState(false);
@@ -31,8 +31,9 @@ export default function ListUsers(props) {
                 setIsVisibleModal={setIsVisibleModal}
                 setModalTitle={setModalTitle}
                 setModalContent={setModalContent}
+                setReloadUsers={setReloadUsers}
             /> 
-                : <UsersInactive usersInactive={usersInactive}/>}
+                : <UsersInactive usersInactive={usersInactive} setReloadUsers={setReloadUsers}/>}
 
             <Modal
                 title={modalTitle}
@@ -47,7 +48,7 @@ export default function ListUsers(props) {
 }
 
 function UsersActive(props) {
-    const { usersActive, setModalTitle, setIsVisibleModal, setModalContent } = props;
+    const { usersActive, setModalTitle, setIsVisibleModal, setModalContent, setReloadUsers } = props;
     const editUser = user => 
     {
         setIsVisibleModal(true);
@@ -56,7 +57,9 @@ function UsersActive(props) {
         else
             setModalTitle("Editando usuario ...");
 
-        setModalContent(<EditUserForm user={user}/>);
+        setModalContent(<EditUserForm user={user} 
+            setIsVisibleModal={setIsVisibleModal}
+            setReloadUsers={setReloadUsers}/>);
     }
 
     return (

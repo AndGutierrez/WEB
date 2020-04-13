@@ -132,26 +132,26 @@ export function getAvatarApi(avatarName) {
     });
 }
 
-// export function updateUserApi(token, user, userId) {
-//     const url = `${basePath}/${apiVersion}/update-user/${userId}`;
+export function updateUserApi(token, user, userId) {
+    const url = `${basePath}/${apiVersion}/update-user/${userId}`;
     
-//     const params= {
-//         method = "PUT",
-//         headers: { 
-//             "Content-Type": "application/json",
-//             Authorization: token
-//         },
-//         body: JSON.stringify(user),
-//     };
+    const params = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify(user),
+    };
 
-//     return fetch(url, params)
-//     .then(response => {
-//         return response.json;
-//     })
-//     .then(result => {
-//         return result;
-//     })
-//     .catch(err => {
-//         return err.message;          
-//     });
-// }
+    return fetch(url, params)
+    .then(response => {
+        return response.json();
+    })
+    .then(result => {
+        return result;
+    })
+    .catch(err => {
+        return err.message;          
+    });
+}

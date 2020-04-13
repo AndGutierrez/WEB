@@ -157,9 +157,20 @@ function getAvatar(req, res) {
     });
 }
 
-function updateUser(req, res) {
-    const userData = req.body;
+async function updateUser(req, res) {
+    let userData = req.body;
+    userData.email = req.body.email.toLowerCase();
     const params = req.params;
+
+    if (userData.password) {
+        await bcrypt.hash(userData.password, null, null, (err, hash) => {
+            if (err) {
+                res.status(500).send({ message: "Error al encriptar la contraseña."});
+            } else {
+                userData.password = hash;
+            }
+        });
+    }
 
     User.findByIdAndUpdate( { _id: params.id }, userData, (err, userUpdate) => {
         if (err) {
@@ -168,10 +179,9 @@ function updateUser(req, res) {
             if (!userUpdate) {
                 res.status(404).send({ message: "No se ha encontrado ningún usuario." });
             }
-            res.status(200).send({ message: "Usuario actualizado correctamente." });
+            res.status(200).send({ message: "Usuario actualizado correctamente." });            
         }
-    })
-    console.log(userData);
+    });
 }
 
 module.exports = {
