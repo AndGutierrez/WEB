@@ -179,7 +179,27 @@ async function updateUser(req, res) {
             if (!userUpdate) {
                 res.status(404).send({ message: "No se ha encontrado ningún usuario." });
             }
-            res.status(200).send({ message: "Usuario actualizado correctamente." });            
+            res.status(200).send({ message: "Usuario actualizado correctamente." });
+        }
+    });
+}
+
+function activateUser(req, res) {    
+    const { id }  = req.params;
+    const { active } = req.body
+
+    console.log(id);
+    console.log(active);
+
+    User.findByIdAndUpdate(id, { active }, (err, userStored) => {
+        if (err) {
+            res.status(500).send({ message: "Error del servidor." });
+        } else {
+            if (!userStored) {
+                res.status(404).send({ message: "No se ha encontrado ningún usuario." });
+            }
+            res.status(200).send({ message: active ? "Usuario activado correctamente." : 
+                "Usuario desactivado correctamente."});
         }
     });
 }
@@ -192,4 +212,5 @@ module.exports = {
     uploadAvatar,
     getAvatar,
     updateUser,
+    activateUser,
 };
