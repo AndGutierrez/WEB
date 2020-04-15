@@ -186,10 +186,7 @@ async function updateUser(req, res) {
 
 function activateUser(req, res) {    
     const { id }  = req.params;
-    const { active } = req.body
-
-    console.log(id);
-    console.log(active);
+    const { active } = req.body;
 
     User.findByIdAndUpdate(id, { active }, (err, userStored) => {
         if (err) {
@@ -204,6 +201,21 @@ function activateUser(req, res) {
     });
 }
 
+function deleteUser(req, res) {    
+    const { id }  = req.params;
+    
+    User.findByIdAndDelete(id, (err, userDeleted) => {
+        if (err) {
+            res.status(500).send({ message: "Error del servidor." });
+        } else {
+            if (!userDeleted) {
+                res.status(404).send({ message: "No se ha encontrado ningún usuario." });
+            }
+            res.status(200).send({ message: "Usuario eliminado correctamente." });
+        }
+    });
+}
+
 module.exports = {
     signUp,
     signIn,
@@ -213,4 +225,5 @@ module.exports = {
     getAvatar,
     updateUser,
     activateUser,
+    deleteUser,
 };
