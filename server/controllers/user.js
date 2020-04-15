@@ -21,29 +21,27 @@ function signUp(req, res) {
             res.status(404).send({ message: "Las contraseñas no coinciden."});
         } else {
             bcrypt.hash(password, null, null, function(err, hash) {
-                if(err){
+                if (err ){
                     res
                     .status(500)
-                    .send({ message: "Error al encriptar la contrasela."} );
+                    .send({ message: "Error al encriptar la contraseña."} );
                 }
-                else{
+                else {
                     user.password = hash;
                     
                     user.save((err, userStored) => {
                         if (err) {
-                            res.status(500).send({message: "El usario ya existe ."});
+                            res.status(500).send({message: "El usuario ya existe."});
                         }
                         else {
                             if (!userStored) {
                                 res.status(404).send({message: "Error al crear el usuario."});
-                            } else {
-                                res.status(200).send({user: userStored});
                             }
+                            res.status(200).send({user: userStored});
                         } 
                     });
                 }
             });
-            /* res.status(200).send({message: "Usuario creado."});*/
         }
     }
 }
@@ -216,6 +214,42 @@ function deleteUser(req, res) {
     });
 }
 
+function createUser(req, res) {
+    const user = new User();
+
+    const { name, lastname, email, role, password } = req.body;
+    user.name = name;
+    user.lastname = lastname;
+    user.email = email.toLowerCase();
+    user.role = role; 
+    user.active = true;
+
+    if (!password) {
+        res.status(500).send({ message: "La contraseña es obligatoria."});
+    } else {
+        bcrypt.hash(password, null, null, (err, hash) => {
+            if (err) {
+                res.status(500).send({ message: "Error al encriptar la contraseña."} );
+            }
+            else {
+                user.password = hash;
+                    
+                user.save((err, userStored) => {
+                    if (err) {
+                        res.status(500).send({ message: "El usuario ya existe."} );
+                    }
+                    else {
+                        if (!userStored) {
+                            res.status(404).send({message: "Error al crear el usuario."});
+                        }
+                        res.status(200).send({message: "Usuario creado."});
+                    } 
+                });
+            }                        
+        });
+    }
+}
+
 module.exports = {
     signUp,
     signIn,
@@ -226,4 +260,5 @@ module.exports = {
     updateUser,
     activateUser,
     deleteUser,
+    createUser,
 };
