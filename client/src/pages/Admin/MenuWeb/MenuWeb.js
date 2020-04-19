@@ -6,9 +6,9 @@ import MenuWebList from "..//../../components/Admin/MenuWeb/MenuWebList";
 export default function MenuWeb() {
     const [menus, setMenus] = useState([]);
     const [reloadMenuWeb, setReloadMenuWeb] = useState(false);
-    const accessToken = getAccessTokenApi();
 
     useEffect(() => {
+        const accessToken = getAccessTokenApi();
         getMenusApi(accessToken).then(response => {
             setMenus(response.menus);
         });

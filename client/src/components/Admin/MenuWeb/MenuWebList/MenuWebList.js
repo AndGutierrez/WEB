@@ -3,7 +3,7 @@ import { List, Switch, Icon, Button, Modal as ModalAntd, notification } from 'an
 import Modal from '../../../Modal';
 import DragSortableList from 'react-drag-sortable';
 
-import { updateMenuApi } from '../../../../api/menu';
+import { updateMenuApi, activateMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth';
 
 import './MenuWebList.scss';
@@ -20,14 +20,20 @@ export default function MenuWebList(props) {
     useEffect(() => {
         const listItemsArray = [];
 
-        menus.forEach(item => {
-            
+        menus.forEach(item => {            
             listItemsArray.push({
-                content: <MenuItem item={item}/>
+                content: <MenuItem item={item} activateMenu={activateMenu}/>
             });
         });
         setListItems(listItemsArray);
-    }, [menus])
+    }, [menus]);
+
+    const activateMenu = (menu, status) => {
+        const accesToken = getAccessTokenApi();
+        activateMenuApi(accesToken, menu._id, status).then(response => {
+          notification["success"]({ message: response });
+        });
+      };
 
     const onSort = (sortedList, dropEvent) => {
         const accesToken= getAccessTokenApi();
@@ -37,7 +43,7 @@ export default function MenuWebList(props) {
             const order = item.rank;
 
             updateMenuApi(accesToken, _id, { order } );
-        })
+        });
     };
 
     return (
@@ -56,12 +62,15 @@ export default function MenuWebList(props) {
 }
 
 function MenuItem(props) {
-    const { item } = props;
+    const { item, activateMenu } = props;
 
     return (
         <List.Item
             actions={[
-                <Switch defaultChecked={item.active}/>,
+                <Switch
+                    defaultChecked={item.active} 
+                    onChange={e => activateMenu(item, e)}
+                />,
                 <Button type="primary">
                     <Icon type="edit"/>
                 </Button>,

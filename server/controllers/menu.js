@@ -66,8 +66,9 @@ function activateMenu(req, res) {
             } else {
                 if (active === true) {
                     res.status(200).send({ message: "Menú activado correctamente." });
-                } 
-                res.status(200).send({ message: "Menú desactivado correctamente." });
+                } else { 
+                    res.status(200).send({ message: "Menú desactivado correctamente." });
+                }
             }
         }
     });
