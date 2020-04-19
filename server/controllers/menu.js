@@ -53,8 +53,29 @@ function updateMenu(req, res) {
     });
 }
 
+function activateMenu(req, res) {
+    const { id } = req.params;
+    const { active } = req.body;
+
+    Menu.findByIdAndUpdate(id, { active }, (err, menuUpdated ) => {
+        if (err){
+            res.status(500).send({ message: "Error del servidor." });
+        } else {
+            if (!menuUpdated) {
+                res.status(404).send({ message: "No se ha encontrado ningún menú." });
+            } else {
+                if (active === true) {
+                    res.status(200).send({ message: "Menú activado correctamente." });
+                } 
+                res.status(200).send({ message: "Menú desactivado correctamente." });
+            }
+        }
+    });
+}
+
 module.exports = {
     addMenu,
     getMenus,
     updateMenu,
+    activateMenu,
 };
