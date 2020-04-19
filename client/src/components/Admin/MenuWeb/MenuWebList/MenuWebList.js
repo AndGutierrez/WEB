@@ -3,6 +3,9 @@ import { List, Switch, Icon, Button, Modal as ModalAntd, notification } from 'an
 import Modal from '../../../Modal';
 import DragSortableList from 'react-drag-sortable';
 
+import { updateMenuApi } from '../../../../api/menu';
+import { getAccessTokenApi } from '../../../../api/auth';
+
 import './MenuWebList.scss';
 
 const { confirm } = ModalAntd;
@@ -13,8 +16,6 @@ export default function MenuWebList(props) {
     const [isVisibleModal, setsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setmodalContent] = useState(null);
-
-    console.log(listItems);
     
     useEffect(() => {
         const listItemsArray = [];
@@ -29,7 +30,14 @@ export default function MenuWebList(props) {
     }, [menus])
 
     const onSort = (sortedList, dropEvent) => {
-        console.log("sortedList", sortedList);
+        const accesToken= getAccessTokenApi();
+
+        sortedList.forEach(item => {
+            const { _id } = item.content.props.item;
+            const order = item.rank;
+
+            updateMenuApi(accesToken, _id, { order } );
+        })
     };
 
     return (
