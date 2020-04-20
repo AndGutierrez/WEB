@@ -12,9 +12,6 @@ export default function AddMenuWebForm(props) {
 
     const addMenu = event => {
         event.preventDefault();
-        
-        console.log('Creando menú');
-        console.log(menuData);
 
         let menuDataToAdd = {
             title: menuData.title,
