@@ -1,5 +1,29 @@
 import { basePath, apiVersion } from './config';
 
+export function addMenuApi(token, menuData) {
+    const url = `${basePath}/${apiVersion}/add-menu`;
+
+    const params = {
+        method: "POST",
+        headers: {
+            "content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify(menuData),
+    };
+
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result.message;
+        })
+        .catch(err => {
+            return err.message;          
+        });
+}
+
 export function getMenusApi(token) {
     const url = `${basePath}/${apiVersion}/menus`;
     
