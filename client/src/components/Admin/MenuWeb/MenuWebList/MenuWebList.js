@@ -5,7 +5,9 @@ import DragSortableList from 'react-drag-sortable';
 
 import { updateMenuApi, activateMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth';
+
 import AddMenuWebForm from '../AddMenuWebForm';
+import EditMenuWebForm from '../EditMenuWebForm';
 
 import './MenuWebList.scss';
 
@@ -23,7 +25,9 @@ export default function MenuWebList(props) {
 
         menus.forEach(item => {            
             listItemsArray.push({
-                content: <MenuItem item={item} activateMenu={activateMenu}/>
+                content: <MenuItem item={item} 
+                    activateMenu={activateMenu}
+                    editMenuModal={editMenuModal}/>
             });
         });
         setListItems(listItemsArray);
@@ -58,6 +62,18 @@ export default function MenuWebList(props) {
         );
     };
 
+    const editMenuModal = menu => {
+        setIsVisibleModal(true);
+        setModalTitle(`Editando menú: ${menu.title}`);
+        setModalContent(
+            <EditMenuWebForm 
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadMenuWeb={setReloadMenuWeb}
+                menu={menu}
+            />
+        );
+    };
+
     return (
         <div className="menu-web-list">
             <div className="menu-web-list__header">
@@ -82,7 +98,7 @@ export default function MenuWebList(props) {
 }
 
 function MenuItem(props) {
-    const { item, activateMenu } = props;
+    const { item, activateMenu, editMenuModal } = props;
 
     return (
         <List.Item
@@ -91,7 +107,7 @@ function MenuItem(props) {
                     defaultChecked={item.active} 
                     onChange={e => activateMenu(item, e)}
                 />,
-                <Button type="primary">
+                <Button type="primary" onClick={() => editMenuModal(item)}>
                     <Icon type="edit"/>
                 </Button>,
                 <Button type="danger">
