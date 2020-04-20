@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Select, Icon, Input, notification, Button } from 'antd';
+import { Form, Icon, Input, notification, Button } from 'antd';
 
 import { updateMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth';
@@ -47,7 +47,6 @@ export default function EditMenuWebForm(props) {
 
 function EditForm(props) {
     const { menuData, setMenuData, editMenu } = props;
-    const { Option } = Select;
 
     return (
         <Form className="form-edit" onSubmit={editMenu}>

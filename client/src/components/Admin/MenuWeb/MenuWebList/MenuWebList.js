@@ -3,7 +3,7 @@ import { List, Switch, Icon, Button, Modal as ModalAntd, notification } from 'an
 import Modal from '../../../Modal';
 import DragSortableList from 'react-drag-sortable';
 
-import { updateMenuApi, activateMenuApi } from '../../../../api/menu';
+import { updateMenuApi, activateMenuApi, deleteMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth';
 
 import AddMenuWebForm from '../AddMenuWebForm';
@@ -25,12 +25,18 @@ export default function MenuWebList(props) {
 
         menus.forEach(item => {            
             listItemsArray.push({
-                content: <MenuItem item={item} 
-                    activateMenu={activateMenu}
-                    editMenuModal={editMenuModal}/>
+                content: (
+                    <MenuItem 
+                        item={item} 
+                        activateMenu={activateMenu}
+                        editMenuModal={editMenuModal}
+                        deleteMenu={deleteMenu}
+                    />
+                )
             });
         });
         setListItems(listItemsArray);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [menus]);
 
     const activateMenu = (menu, status) => {
@@ -60,6 +66,33 @@ export default function MenuWebList(props) {
                 setReloadMenuWeb={setReloadMenuWeb}
             />
         );
+    };
+
+    
+    const deleteMenu = menu => {
+        const accessToken = getAccessTokenApi();
+
+        confirm({
+            title: "Eliminar menú",
+            content: `¿Está seguro que desea eliminar el menú ${menu.title}?`,
+            okText: "Si",
+            okType: "danger",
+            cancelText: "No",
+            onOk() {
+                deleteMenuApi(accessToken, menu._id)
+                    .then(response => {
+                        notification["success"]({ 
+                            message: response 
+                        });
+                        setReloadMenuWeb(true);
+                    })
+                    .catch(err => {
+                        notification["error"]({ 
+                            message: err 
+                        });
+                    });
+            } 
+        });
     };
 
     const editMenuModal = menu => {
@@ -98,7 +131,7 @@ export default function MenuWebList(props) {
 }
 
 function MenuItem(props) {
-    const { item, activateMenu, editMenuModal } = props;
+    const { item, activateMenu, editMenuModal, deleteMenu } = props;
 
     return (
         <List.Item
@@ -110,7 +143,7 @@ function MenuItem(props) {
                 <Button type="primary" onClick={() => editMenuModal(item)}>
                     <Icon type="edit"/>
                 </Button>,
-                <Button type="danger">
+                <Button type="danger" onClick={() => deleteMenu(item)}>
                     <Icon type="delete"/>
                 </Button>
             ]}
