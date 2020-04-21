@@ -9,15 +9,17 @@ export default function LayoutBasic({ routes }){
     const { Footer } = Layout;
 
     return (
-        <Row>
-            <Col lg={4}/>
-            <Col lg={16}>
-                <MenuTop/>
-                <LoadRoutes routes={routes}/>
-                <Footer>mailto: agutierrez.pers@gmail.com</Footer>
-            </Col>
-            <Col lg={4}/>
-        </Row>
+        <>
+            <Row>
+                <Col lg={4}/>
+                <Col lg={16}>
+                    <MenuTop/>
+                </Col>
+                <Col lg={4}/>
+            </Row>
+            <LoadRoutes routes={routes}/>
+            <Footer>mailto: agutierrez.pers@gmail.com</Footer>
+        </>
     );
 }
 
