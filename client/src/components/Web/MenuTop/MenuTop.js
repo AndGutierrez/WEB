@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getMenusApi } from '../../../api/menu';
 import { getAccessTokenApi } from '../../../api/auth';
 import logo from '../../../assets/img/png/adminlogo.png';
+import SocialLinks from '../SocialLinks/SocialLinks';
 
 import './MenuTop.scss';
 
@@ -52,9 +53,7 @@ export default function MenuTop() {
                 }
             })}
 
-            <div>
-                Social Media...
-            </div>
+            <SocialLinks/>
         </Menu>
     );
 };
