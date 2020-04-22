@@ -1,10 +1,13 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
 import MyInfo from './MyInfo';
+import NavigationFooter from './NavigationFooter';
+
 import "./Footer.scss";
 
 export default function Footer() {
-    const { Footer } = Layout
+    const { Footer } = Layout;
+    
     return (
         <Footer className="footer">
             <Row>
@@ -14,12 +17,14 @@ export default function Footer() {
                         <Col md={8}>
                             <MyInfo/>
                         </Col>
-                        <Col md={8}>Navegación</Col>
+                        <Col md={8}>
+                            <NavigationFooter/>
+                        </Col>
                         <Col md={8}>NewsLetter</Col>
                     </Row>
                     <Row className="footer__copyright">
                         <Col md={12}>© 2020 ALL RIGHTS RESERVED​</Col>
-                        <Col md={12}>Andreés Gutiérrez Vera | Desarrollador .NET y WEB</Col>
+                        <Col md={12}>Andrés Gutiérrez Vera | Desarrollador .NET y WEB</Col>
                     </Row>
                 </Col>
                 <Col md={4}/>                
