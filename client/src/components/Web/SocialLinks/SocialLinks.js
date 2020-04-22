@@ -12,32 +12,31 @@ export default function SocialLinks() {
             <a className="youtube"
                 href="https://www.youtube.com/channel/UCpFMtID_A1gOz6hDN9Bx_jA"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
             >
                 <YouTubeIcon/>
             </a>
             <a className="twitter"
                 href="https://twitter.com/agvera75"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
             >
                 <TwitterIcon/>
             </a>
             <a className="facebook"
                 href="https://www.youtube.com/channel/UCpFMtID_A1gOz6hDN9Bx_jA"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
             >
                 <FacebookIcon/>
             </a>
             <a className="linkedin"
                 href="https://linkedin.com/in/andresgutierrezvera"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
             >
                 <LinkedinIcon/>
             </a>
-            <h1>Social Links</h1>
         </div>        
     );
 }
