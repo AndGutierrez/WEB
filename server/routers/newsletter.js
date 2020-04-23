@@ -3,6 +3,6 @@ const NewsletterController = require('../controllers/newsletter');
 
 const api = express.Router();
 
-api.post("/subscribe-newsletter", NewsletterController.suscribeNewsletter);
+api.post("/subscribe-newsletter/:email", NewsletterController.suscribeNewsletter);
 
 module.exports = api;
