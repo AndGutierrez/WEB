@@ -1,0 +1,21 @@
+@import '../../../index.scss';
+
+.newsletter {
+    position: relative;
+
+    h3 {
+        color: $font-light;
+        font-weight: bold;
+    }
+
+    input {
+        height: 45px;
+        font-size: 15px;
+        width: 90%;
+    }
+
+    button {
+        width: 90%;
+        height: 45px;
+    }
+}

@@ -24,7 +24,7 @@ function RenderListLeft() {
     return (
         <ul>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="book"/> Cursos Online
                 </a>
             </li>
@@ -34,12 +34,12 @@ function RenderListLeft() {
                 </Link>
             </li>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="database"/> Base de Datos
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="right"/> Política de Privacidad
                 </a>
             </li>
@@ -51,22 +51,22 @@ function RenderListRight() {
     return (
         <ul>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="hdd"/> Sistemas / Servidores
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="appstore"/> CMS
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="user"/> Portfolio
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="http://10.0.75.1:3000/">
                     <Icon type="right"/> Política de Cookies
                 </a>
             </li>
