@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import DragSortableList from 'react-drag-sortable';
 import { List, Icon, Button, Modal as ModalAntd, notification, Row, Col } from 'antd';
 import Modal from '../../../Modal';
-import { getCourseDataUdemyApi } from '../../../../api/course';
+
+import { getAccessTokenApi } from '../../../../api/auth';
+import { getCourseDataUdemyApi, deleteCourseApi } from '../../../../api/course';
 
 import './CoursesList.scss';
 
@@ -19,7 +21,8 @@ export default function CoursesList(props) {
         courses.forEach(course => {            
             listCourseArray.push({
                 content: (
-                    <Course course={course} />
+                    <Course course={course}
+                        deleteCourse={deleteCourse} />
                     // <MenuItem 
                     //     course={course} 
                     //     activateMenu={activateMenu}
@@ -36,7 +39,38 @@ export default function CoursesList(props) {
     const onSort = (sortedList, dropEvent) => {
         console.log(sortedList);
     };
-    
+
+            
+    const deleteCourse = course => {
+        const { confirm } = ModalAntd;
+        
+        const accessToken = getAccessTokenApi();
+
+        confirm({
+            title: "Eliminar curso",
+            content: `¿Está seguro que desea eliminar el curso ${course.idCourse}?`,
+            okText: "Si",
+            okType: "danger",
+            cancelText: "No",
+            onOk() {
+                deleteCourseApi(accessToken, course._id)
+                    .then(response => {
+                        const typeNotification = response.code === 200 ? "success" : "warning";
+
+                        notification[typeNotification]({ 
+                            message: response.message
+                        });
+                        setReloadCourses(true);
+                    })
+                    .catch(() => {
+                        notification["error"]({ 
+                            message: "Error del servidor, intentelo más tarde."
+                        });
+                    });
+            } 
+        });
+    };
+
     return (
         <div className="courses-list">
             <div className="courses-list__header">
@@ -68,7 +102,7 @@ export default function CoursesList(props) {
 }
 
 function Course(props) {
-    const { course } = props;
+    const { course, deleteCourse} = props;
     const [courseData, setCourseData] = useState(null);
     
     useEffect(() => {
@@ -89,7 +123,7 @@ function Course(props) {
                 <Button type="primary" onClick={() => console.log('Editar curso') }>
                     <Icon type="edit"/>
                 </Button>,
-                <Button type="danger" onClick={() => console.log('Eliminar curso')}>
+                <Button type="danger" onClick={() => deleteCourse(course) }>
                     <Icon type="delete"/>
                 </Button>
             ]}
