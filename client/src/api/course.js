@@ -62,3 +62,51 @@ export function deleteCourseApi(token, id) {
             return err;          
     });
 }
+
+export function addCourseApi(token, course) {
+    const url = `${basePath}/${apiVersion}/add-course`;
+    
+    const params = {
+        method: "POST",
+        headers: {
+            "content-Type": "application/json", 
+            Authorization: token
+        },
+        body: JSON.stringify(course)
+    };
+
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err;          
+    });
+}
+
+export function updateCourseApi(token, id, data) {
+    const url = `${basePath}/${apiVersion}/update-course/${id}`;
+    
+    const params = {
+        method: "PUT",
+        headers: {
+            "content-Type": "application/json", 
+            Authorization: token
+        },
+        body: JSON.stringify(data)
+    };
+
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err;          
+    });
+}
