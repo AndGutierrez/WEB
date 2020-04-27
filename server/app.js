@@ -10,6 +10,7 @@ const userRoutes = require("./routers/user");
 const menuRoutes = require("./routers/menu");
 const newsletterRoutes = require("./routers/newsletter");
 const courseRoutes = require("./routers/course");
+const blogRoutes = require("./routers/blog");
 // ....
 
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -33,7 +34,7 @@ app.use(`/api/${API_VERSION}`, userRoutes);
 app.use(`/api/${API_VERSION}`, authRoutes);
 app.use(`/api/${API_VERSION}`, menuRoutes);
 app.use(`/api/${API_VERSION}`, newsletterRoutes);
-app.use(`/api/${API_VERSION}`, courseRoutes);
+app.use(`/api/${API_VERSION}`, blogRoutes);
 // ....
 
 module.exports = app;

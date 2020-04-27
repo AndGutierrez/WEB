@@ -7,10 +7,10 @@ function addCourse(req, res) {
 
     course.save((err, courseStored) => {
         if (err) {
-            res.status(400).send({ code: 400, message: "Falta alguno de los datos del curso."});
+            res.status(500).send({ code: 500, message: "Falta alguno de los datos del curso."});
         } else {
             if (!courseStored) {
-                res.status(400).send({ code: 500, message: "No se ha podido crear el curso."});
+                res.status(400).send({ code: 400, message: "No se ha podido crear el curso."});
                 return;
             } else {
                 res.status(200).send({ code: 200, message: "Curso creado correctamente."});
