@@ -40,6 +40,19 @@ function getBlogs(req, res) {
     });
 }
 
+function getBlog(req, res) {    
+    Blog.findById(req.params.id, (err, blog) => {
+        if (err) {
+            res.status(500).send({ code: 500, message: "Error del servidor." });
+        } else {
+            if (!blog) {
+                res.status(404).send({ code: 404, message: "No se ha encontrado ningún blog." });
+            }
+            res.status(200).send({ code: 200,  blog: blog });
+        }
+    });
+}
+
 function updateBlog(req, res) {
     Blog.findByIdAndUpdate(req.params.id, req.body, (err, blogUpdated) => {
         if (err){
@@ -70,6 +83,7 @@ function deleteBlog(req, res) {
 
 module.exports = {
     addBlog,
+    getBlog,
     getBlogs,
     updateBlog,
     deleteBlog,
