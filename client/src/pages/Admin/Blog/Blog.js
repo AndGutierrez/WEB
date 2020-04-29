@@ -3,6 +3,7 @@ import { Button, notification } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { getBlogsApi } from '../../../api/blog';
 import Modal from '../../../components/Modal';
+import BlogList from '../../../components/Admin/Blog/BlogList';
 import queryString from 'query-string';
 
 import './Blog.scss';
@@ -16,8 +17,6 @@ function Blog(props) {
     const [modalContent, setModalContent] = useState(null);
     const { page = 1 } = queryString.parse(location.search);
 
-    console.log(blogs);
-
     useEffect(() => {
         getBlogsApi(page, 12)
         .then(response => {
@@ -30,8 +29,13 @@ function Blog(props) {
         .catch(() => { 
             notification["error"]({ message: "Error del servidor" });
         });
-    }, []);
+        setReloadBlogs(false);
+    }, [page, reloadBlogs]);
 
+    if (!blogs) {
+        return null;
+    }
+        
     return (
         <div className="blog">
             <div className="blog__add-post">
@@ -40,8 +44,8 @@ function Blog(props) {
                 </Button>
             </div>
             
-            <h1>PostList...</h1>                    
-            <h2>Paginación</h2> 
+            <BlogList blogs={blogs}/>
+            <h2>Paginación...</h2> 
 
             <Modal
                 title={modalTitle}
