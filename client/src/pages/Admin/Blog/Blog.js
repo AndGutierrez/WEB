@@ -45,7 +45,7 @@ function Blog(props) {
                 </Button>
             </div>
             
-            <BlogList blogs={blogs}/>
+            <BlogList blogs={blogs} setReloadBlogs={setReloadBlogs}/>
             
             <Pagination blogs={blogs} location={location} history={history}/>
 

@@ -16,6 +16,29 @@ export function getBlogsApi(page, limit) {
         });
 }
 
+export function deleteBlogApi(token, id) {
+    const url = `${basePath}/${apiVersion}/delete-blog/${id}`;
+    
+    const params = {
+        method: "DELETE",
+        headers: {
+            "content-Type": "application/json", 
+            Authorization: token
+        }
+    };
+
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err;          
+    });
+}
+
 // export function addBlogApi(token, blogData) {
 //     const url = `${basePath}/${apiVersion}/add-blog`;
 
