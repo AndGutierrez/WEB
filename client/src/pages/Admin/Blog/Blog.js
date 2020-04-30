@@ -5,6 +5,7 @@ import { getBlogsApi } from '../../../api/blog';
 import Modal from '../../../components/Modal';
 import BlogList from '../../../components/Admin/Blog/BlogList';
 import Pagination from '../../../components/Pagination';
+import AddEditBlogForm from '../../../components/Admin/Blog/AddEditBlogForm';
 import queryString from 'query-string';
 
 import './Blog.scss';
@@ -33,6 +34,18 @@ function Blog(props) {
         setReloadBlogs(false);
     }, [page, reloadBlogs]);
 
+    const addBlogModal = () => {
+        setIsVisibleModal(true);
+        setModalTitle("Creando nuevo blog");
+        setModalContent(
+           <AddEditBlogForm
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadBlogs={setReloadBlogs}
+                blog={null}
+            />
+        );
+    };
+
     if (!blogs) {
         return null;
     }
@@ -40,7 +53,7 @@ function Blog(props) {
     return (
         <div className="blog">
             <div className="blog__add-post">
-                <Button type="primary">
+                <Button type="primary" onClick={addBlogModal}>
                     Nuevo blog
                 </Button>
             </div>
@@ -53,7 +66,7 @@ function Blog(props) {
                 title={modalTitle}
                 isVisible={isVisibleModal}
                 setIsVisible={setIsVisibleModal}
-                width="25%"
+                width="75%"
             >
                 {modalContent}
             </Modal>
