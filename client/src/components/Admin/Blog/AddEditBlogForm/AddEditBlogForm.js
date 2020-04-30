@@ -3,7 +3,7 @@ import { Form, Icon, Row, Col, DatePicker, Input, Button, notification } from 'a
 import { Editor } from '@tinymce/tinymce-react';
 import moment from 'moment';
 import { getAccessTokenApi } from '../../../../api/auth';
-//import { addBlogApi, updateBlogApi } from "../../../../api/blog";
+import { addBlogApi } from "../../../../api/blog";
 
 import "./AddEditBlogForm.scss";
 
@@ -15,27 +15,37 @@ export default function AddEditBlogForm(props) {
         blog ? setBlogData(blog) : setBlogData({});
     }, [blog]);
 
-    // const addBlog = e => {
-    //     e.preventDefault();
+    const processBlog = e => {
+        e.preventDefault();       
+        const { title, url, description, date} = blogData;
 
-    //     if (!blogData.idBlog) {
-    //         notification["error"]({ message: "El id del curso es obligatorio" });
-    //     } else {
-    //         const accessToken = getAccessTokenApi();
+        if (!title || !url || !description || !date) {
+            notification["error"]({ message: "Todos los campos son obligatorios" });
+        } else {
+            if (!blog) {
+                addBlog();
+            } else {
+                console.log('Editando blog.');
+            }
+        }
+    };
 
-    //         addBlogApi(accessToken, blogData)
-    //             .then(response => {
-    //                 const typeNotification = response.code === 200 ? "success" : "warning";
-    //                 notification[typeNotification]({ message: response.message });
-    //                 setIsVisibleModal(false);
-    //                 setReloadBlogs(true);
-    //                 setBlogData({});
-    //             })
-    //             .catch(() => {
-    //                 notification["error"]({ message: "Error del servidor, intentelo más tarde." });
-    //             });
-    //     }
-    // };
+    const addBlog = () => {
+        console.log(blogData);
+        const accessToken = getAccessTokenApi();
+
+        addBlogApi(accessToken, blogData)
+            .then(response => {
+                const typeNotification = response.code === 200 ? "success" : "warning";
+                notification[typeNotification]({ message: response.message });
+                setIsVisibleModal(false);
+                setReloadBlogs(true);
+                setBlogData({});
+            })
+            .catch(() => {
+                notification["error"]({ message: "Error del servidor, intentelo más tarde." });
+            });
+    };
 
     // const updateBlog = e => {
     //     e.preventDefault();
@@ -65,19 +75,20 @@ export default function AddEditBlogForm(props) {
                 blog={blog}
                 blogData={blogData}
                 setBlogData={setBlogData}
+                processBlog={processBlog}
             />
         </div>
   );
 }
 
 function AddEditForm(props) {
-    const { blog, addBlog, updateBlog, blogData, setBlogData } = props;
+    const { blog, blogData, setBlogData, processBlog } = props;
 
     return (
         <Form
             className="form-add-edit"
             layout="inline"
-            // onSubmit={blog ? updateBlog : addBlog}
+            onSubmit={processBlog}
         >
             <Row gutter={24}>
                 <Col span={8}>
@@ -85,15 +96,15 @@ function AddEditForm(props) {
                         prefix={<Icon type="font-size" />}
                         placeholder="Title"
                         value={blogData.title}
-                        // onChange={e => setBlogData({ ...blogData, title: e.target.value })}
+                        onChange={e => setBlogData({ ...blogData, title: e.target.value })}
                     />
                 </Col>
                 <Col span={8}>
                     <Input
                         prefix={<Icon type="link" />}
                         placeholder="Url"
-                        value={blogData.link}
-                        // onChange={e => setBlogData({ ...blogData, link: e.target.value })}
+                        value={blogData.url}
+                        onChange={e => setBlogData({ ...blogData, url: transformTextToUrl(e.target.value) })}
                         />
                 </Col>
                 <Col span={8}>
@@ -102,14 +113,16 @@ function AddEditForm(props) {
                         format="DD/MM/YYY HH:mm:ss"
                         placeholder="Fecha de publicación"
                         showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
-                        // value={blogData.date}
-                        // onChange={}
+                        value={blogData.date && moment(blogData.date)}
+                        onChange={(e, value) => 
+                            setBlogData({ ...blogData, 
+                                date: moment(value, "DD/MM/YYY HH:mm:ss").toISOString()})}
                     />
                 </Col>
             </Row>
 
             <Editor
-                value=""
+                value={blogData.description && ""}
                 init={{
                 height: 400,
                 menubar: true,
@@ -123,7 +136,7 @@ function AddEditForm(props) {
                     alignleft aligncenter alignright alignjustify | \
                     bullist numlist outdent indent | removeformat | help'
                 }}
-                // onEditorChange={this.handleEditorChange}
+                onBlur={e => setBlogData({ ...blogData, description: e.target.getContent() })}
             /> 
             <Button type="primary" htmlType="submit" className="btn-submit">
                 {blog ? "Actualizar blog" : "Crear blog"}
@@ -131,4 +144,8 @@ function AddEditForm(props) {
  
         </Form>
     );
+}
+
+function transformTextToUrl(text) {
+    return text.toLowerCase().replace(" ", "-");
 }

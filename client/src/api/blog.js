@@ -39,29 +39,29 @@ export function deleteBlogApi(token, id) {
     });
 }
 
-// export function addBlogApi(token, blogData) {
-//     const url = `${basePath}/${apiVersion}/add-blog`;
+export function addBlogApi(token, blogData) {
+    const url = `${basePath}/${apiVersion}/add-blog`;
+    
+    const params = {
+        method: "POST",
+        headers: {
+            "content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify(blogData),
+    };
 
-//     const params = {
-//         method: "POST",
-//         headers: {
-//             "content-Type": "application/json",
-//             Authorization: token
-//         },
-//         body: JSON.stringify(blogData),
-//     };
-
-//     return fetch(url, params)
-//         .then(response => {
-//             return response.json();
-//         })
-//         .then(result => {
-//             return result.message;
-//         })
-//         .catch(err => {
-//             return err.message;          
-//         });
-// }
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err.message;          
+        });
+}
 
 // export function updateBlogApi(token, blogId, blogData) {
 //     const url = `${basePath}/${apiVersion}/update-blog/${blogId}`;
