@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { getBlogsApi } from '../../../api/blog';
 import Modal from '../../../components/Modal';
 import BlogList from '../../../components/Admin/Blog/BlogList';
+import Pagination from '../../../components/Pagination';
 import queryString from 'query-string';
 
 import './Blog.scss';
@@ -45,7 +46,8 @@ function Blog(props) {
             </div>
             
             <BlogList blogs={blogs}/>
-            <h2>Paginación...</h2> 
+            
+            <Pagination blogs={blogs} location={location} history={history}/>
 
             <Modal
                 title={modalTitle}
