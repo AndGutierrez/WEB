@@ -63,49 +63,26 @@ export function addBlogApi(token, blogData) {
         });
 }
 
-// export function updateBlogApi(token, blogId, blogData) {
-//     const url = `${basePath}/${apiVersion}/update-blog/${blogId}`;
+export function updateBlogApi(token, blogId, blogData) {
+    const url = `${basePath}/${apiVersion}/update-blog/${blogId}`;
 
-//     const params = {
-//         method: "PUT",
-//         headers: {
-//             "content-Type": "application/json",
-//             Authorization: token
-//         },
-//         body: JSON.stringify(blogData),
-//     };
+    const params = {
+        method: "PUT",
+        headers: {
+            "content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify(blogData),
+    };
 
-//     return fetch(url, params)
-//         .then(response => {
-//             return response.json();
-//         })
-//         .then(result => {
-//             return result.message;
-//         })
-//         .catch(err => {
-//             return err.message;          
-//         });
-// }
-
-// export function deleteBlogApi(token, blogId) {
-//     const url = `${basePath}/${apiVersion}/delete-blog/${blogId}`;
-
-//     const params = {
-//         method: "DELETE",
-//         headers: {
-//             "content-Type": "application/json",
-//             Authorization: token
-//         },
-//     };
-
-//     return fetch(url, params)
-//         .then(response => {
-//             return response.json();
-//         })
-//         .then(result => { 
-//             return result.message;
-//         })
-//         .catch(err => {
-//             return err.message;          
-//         });
-// }
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err;          
+        });
+}

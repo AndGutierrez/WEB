@@ -34,7 +34,7 @@ function Blog(props) {
         setReloadBlogs(false);
     }, [page, reloadBlogs]);
 
-    const addBlogModal = () => {
+    const addBlog = () => {
         setIsVisibleModal(true);
         setModalTitle("Creando nuevo blog");
         setModalContent(
@@ -46,6 +46,18 @@ function Blog(props) {
         );
     };
 
+    const editBlog = (blog) => {
+        setIsVisibleModal(true);
+        setModalTitle("Editando blog");
+        setModalContent(
+           <AddEditBlogForm
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadBlogs={setReloadBlogs}
+                blog={blog}
+            />
+        );
+    };
+
     if (!blogs) {
         return null;
     }
@@ -53,12 +65,15 @@ function Blog(props) {
     return (
         <div className="blog">
             <div className="blog__add-post">
-                <Button type="primary" onClick={addBlogModal}>
+                <Button type="primary" onClick={addBlog}>
                     Nuevo blog
                 </Button>
             </div>
             
-            <BlogList blogs={blogs} setReloadBlogs={setReloadBlogs}/>
+            <BlogList 
+                blogs={blogs} 
+                editBlog={editBlog}
+                setReloadBlogs={setReloadBlogs}/>
             
             <Pagination blogs={blogs} location={location} history={history}/>
 

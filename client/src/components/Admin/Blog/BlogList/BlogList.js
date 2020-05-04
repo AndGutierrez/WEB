@@ -7,7 +7,7 @@ import { getAccessTokenApi } from '../../../../api/auth';
 import './BlogList.scss';
 
 export default function BlogList(props) {
-    const { blogs, setReloadBlogs } = props;
+    const { blogs, setReloadBlogs, editBlog } = props;
     const { confirm } = Modal;
 
     const deleteBlog = blog => {       
@@ -42,14 +42,14 @@ export default function BlogList(props) {
         <div className="blog-list">
             <List 
                 dataSource={blogs.docs}
-                renderItem={blog => <Blog blog={blog} deleteBlog={deleteBlog}/>}
+                renderItem={blog => <Blog blog={blog} deleteBlog={deleteBlog} editBlog={editBlog}/>}
             />
         </div>
     )
 }
 
 function Blog(props) {
-    const { blog, deleteBlog } = props;
+    const { blog, deleteBlog, editBlog } = props;
 
     return (
         <List.Item 
@@ -57,12 +57,11 @@ function Blog(props) {
                 <Link to={`/blog/${blog.url}`} target="_blank">
                     <Button 
                         type="primary" 
-
                     >
                         <Icon type="eye"/>
                     </Button>
                 </Link>,                 
-                 <Button type="primary">
+                 <Button type="primary" onClick={() => editBlog(blog)}>
                      <Icon type="edit"/>
                  </Button>,
                 <Button type="danger" onClick={() => deleteBlog(blog)}>

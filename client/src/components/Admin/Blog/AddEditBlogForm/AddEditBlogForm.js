@@ -3,7 +3,7 @@ import { Form, Icon, Row, Col, DatePicker, Input, Button, notification } from 'a
 import { Editor } from '@tinymce/tinymce-react';
 import moment from 'moment';
 import { getAccessTokenApi } from '../../../../api/auth';
-import { addBlogApi } from "../../../../api/blog";
+import { addBlogApi, updateBlogApi } from "../../../../api/blog";
 
 import "./AddEditBlogForm.scss";
 
@@ -25,13 +25,12 @@ export default function AddEditBlogForm(props) {
             if (!blog) {
                 addBlog();
             } else {
-                console.log('Editando blog.');
+                updateBlog();
             }
         }
     };
 
-    const addBlog = () => {
-        console.log(blogData);
+    const addBlog = () => {        
         const accessToken = getAccessTokenApi();
 
         addBlogApi(accessToken, blogData)
@@ -47,27 +46,23 @@ export default function AddEditBlogForm(props) {
             });
     };
 
-    // const updateBlog = e => {
-    //     e.preventDefault();
+    const updateBlog = e => {
+        const accessToken = getAccessTokenApi();
 
-    //     const accessToken = getAccessTokenApi();
-
-    //     updateBlogApi(accessToken, blog._id, blogData)
-    //     .then(response => {
-    //         const typeNotification = response.code === 200 ? "success" : "warning";
-    //         notification[typeNotification]({
-    //         message: response.message
-    //         });
-    //         setIsVisibleModal(false);
-    //         setReloadBlogs(true);
-    //         setBlogData({});
-    //     })
-    //     .catch(() => {
-    //         notification["error"]({
-    //         message: "Error del servidor, intentelo más tarde."
-    //         });
-    //     });
-    // };
+        updateBlogApi(accessToken, blog._id, blogData)
+        .then(response => {
+            const typeNotification = response.code === 200 ? "success" : "warning";
+            notification[typeNotification]({ message: response.message });
+            setIsVisibleModal(false);
+            setReloadBlogs(true);
+            setBlogData({});
+        })
+        .catch(() => {
+            notification["error"]({
+            message: "Error del servidor, intentelo más tarde."
+            });
+        });
+    };
 
     return (
         <div className="add-edit-blog-form">
@@ -122,7 +117,7 @@ function AddEditForm(props) {
             </Row>
 
             <Editor
-                value={blogData.description && ""}
+                value={blogData.description ? blogData.description : ""}
                 init={{
                 height: 400,
                 menubar: true,
