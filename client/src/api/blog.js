@@ -86,3 +86,18 @@ export function updateBlogApi(token, blogId, blogData) {
             return err;          
         });
 }
+
+export function getBlogApi(urlBlog) {
+    const url = `${basePath}/${apiVersion}/get-blog/${urlBlog}`;
+
+    return fetch(url)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err;          
+        });
+}
