@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Spin, List, notification } from 'antd';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
@@ -39,11 +40,16 @@ export default function BlogsListWeb(props) {
     }
 
     return (
-        <div className="posts-list-web">
-            <h1>Blog</h1>
-            <List dataSource={blogs.docs} renderItem={blog => <Blog blog={blog}/>}/>
-            <Pagination blogs={blogs} location={location} history={history}/>
-        </div>
+        <>
+            <Helmet>
+                <title>Blog de programación | Andrés Gutiérrez Vera</title>
+            </Helmet>        
+            <div className="posts-list-web">
+                <h1>Blog</h1>
+                <List dataSource={blogs.docs} renderItem={blog => <Blog blog={blog}/>}/>
+                <Pagination blogs={blogs} location={location} history={history}/>
+            </div>
+        </>
     );
 }
 

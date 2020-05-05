@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Spin, notification } from 'antd';
+import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import 'moment/locale/es';
 import { getBlogApi } from '../../../../api/blog';
@@ -10,8 +11,6 @@ export default function BlogInfo(props) {
     const { url } = props;
     const [blogInfo, setBlogInfo] = useState(null);
 
-    console.log(blogInfo);
-    
     useEffect(() => {
         getBlogApi(url) .then(respose => {
             if (respose.code !== 200) {
@@ -31,16 +30,21 @@ export default function BlogInfo(props) {
     }
     
     return (
-        <div className="blog-info">
-            <h1 className="blog-info__title">{blogInfo.title}</h1>
-            <div className="blog-info__creation-date">
-                {moment(blogInfo.date)
-                .local("es")
-                .format("LL")}
-            </div>
+        <>        
+            <Helmet>
+                <title>{blogInfo.title} | Andrés Gutiérrez Vera</title>
+            </Helmet>        
+            <div className="blog-info">
+                <h1 className="blog-info__title">{blogInfo.title}</h1>
+                <div className="blog-info__creation-date">
+                    {moment(blogInfo.date)
+                    .local("es")
+                    .format("LL")}
+                </div>
 
-            <div className="blog-info__description"
-                dangerouslySetInnerHTML={{ __html: blogInfo.description }}/>
-        </div>
+                <div className="blog-info__description"
+                    dangerouslySetInnerHTML={{ __html: blogInfo.description }}/>
+            </div>
+        </>
     );
 }
