@@ -28,6 +28,10 @@ export default function Courses() {
         <>
             <Helmet>
                 <title>Cursos | Andrés Gutiérrez Vera</title>
+                <meta 
+                    name="description" 
+                    content="Cursos | Web sobre programación de Andrés Gutierrez Vera" 
+                    data-react-helmet="true"/>                
             </Helmet>
             <Row>            
                 <Col md={4}/>

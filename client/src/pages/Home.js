@@ -10,6 +10,10 @@ export default function Home(){
         <>        
             <Helmet>
                 <title>Andrés Gutiérrez Vera</title>
+                <meta 
+                    name="description" 
+                    content="Home | Web sobre programación" 
+                    data-react-helmet="true"/>
             </Helmet>
             <MainBanner/>
             <HomeCourses/>

@@ -12,7 +12,7 @@ export default function BlogInfo(props) {
     const [blogInfo, setBlogInfo] = useState(null);
 
     useEffect(() => {
-        getBlogApi(url) .then(respose => {
+        getBlogApi(url).then(respose => {
             if (respose.code !== 200) {
                 notification["warning"]({ message: respose.message });
             } else {

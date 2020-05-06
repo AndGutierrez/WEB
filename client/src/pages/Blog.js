@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { useParams, withRouter } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BlogsListWeb from '../components/Web/Blog/BlogsListWeb';
 import BlogInfo from '../components/Web/Blog/BlogInfo';
 
